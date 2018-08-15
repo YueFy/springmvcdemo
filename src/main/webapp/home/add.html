@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <title>添加国家</title>
+</head>
+<body>
+<form action="/country/addCountryEntity" method="post">
+    <input type="text" name="location" placeholder="请输入地名">
+    <input type="text" name="population" placeholder="请输入人口">
+    <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/country/file" enctype="multipart/form-data" method="post">
+    <input type="file" name="fileupload" size="35">
+    <button>上传</button>
+</form>
+<hr/>
+<button onclick="testjson()">json</button>&nbsp;&nbsp;
+<button onclick="jsonObject()">jsonObject</button>&nbsp;&nbsp;
+<button onclick="jsonBody()">jsonBody</button>&nbsp;&nbsp;
+<script>
+    function testjson() {
+        var j={name:"马思纯",age:27};
+        $.ajax({
+            url:"/country/json",
+            type:"post",
+            data:j,
+            dataType:"json",
+            success:function (data) {
+                alert("success");
+            }
+        });
+    };
+    function jsonObject() {
+        var url = "/country/jsonObject";
+        var data = {"time":new Date()};
+        data.name="欧豪";
+        data.age="28";
+        var type = "json";
+        $.post(url,
+            data,
+            function(result,status){
+                alert("success");
+            },
+            type);
+    };
+    function jsonBody() {
+        var list=JSON.stringify([{name:"马思纯","age":"27"},{name:"欧豪","age":"28"}]);
+        $.ajax({
+            url: "/country/jsonBody",
+            type: "post",
+            data: list,
+            contentType: "application/json",
+            success: function () {
+
+            }
+        })
+    };
+</script>
+</body>
+</html>
